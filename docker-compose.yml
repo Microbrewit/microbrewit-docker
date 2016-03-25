@@ -1,0 +1,28 @@
+postgres:
+    image: postgres:latest
+    ports:
+        - 192.168.99.100:5432:5432
+    environment:
+        - POSTGRES_DB=microbrewit
+        - POSTGRES_USER=microbrewit
+        - POSTGRES_PASSWORD=microbrewitpassword
+
+elasticsearch:
+    image: elasticsearch:latest
+    ports:
+        - 192.168.99.100:9200:9200
+    volumes:
+        - /Users/snorre/workspaces/microbrewit/elasticsearch/plugins:/usr/share/elasticsearch/plugins
+
+microbrewit-api:
+    image: microbrewit/microbrewit-api:latest
+    ports:
+        - 192.168.99.100:5000:5000
+    links:
+        - postgres
+        - elasticsearch
+    environment:
+        - ELASTICSEARCH_INDEX=mb
+        - POSTGRES_DB=microbrewit
+        - POSTGRES_USER=microbrewit
+        - POSTGRES_PASSWORD=microbrewitpassword

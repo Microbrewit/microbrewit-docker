@@ -1,0 +1,40 @@
+```
+docker-compose up -d
+```
+
+Wait for a little while (a few seconds)
+192.168.99.100 == default ip for docker virtualbox thingy on os x.
+
+```
+pg_restore -U microbrewit -h 192.168.99.100 -p 5432 -d microbrewit -W  < mb.sql
+```
+
+Install kopf with command:
+
+```
+docker-compose run --rm elasticsearch plugin install lmenezes/elasticsearch-kopf
+```
+
+Add mb index
+```
+{ "analysis": {
+     "filter": {
+       "autocomplete_filter": {
+         "type": "edge_ngram",
+         "min_gram": "3",
+         "max_gram": "30"
+       }
+     },
+     "analyzer": {
+       "autocomplete": {
+         "filter": [
+           "lowercase",
+           "autocomplete_filter"
+         ],
+         "type": "custom",
+         "tokenizer": "standard"
+       }
+     }
+   }
+}
+```
