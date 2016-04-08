@@ -26,3 +26,4 @@ microbrewit-api:
         - POSTGRES_DB=microbrewit
         - POSTGRES_USER=microbrewit
         - POSTGRES_PASSWORD=microbrewitpassword
+        - MICROBREWIT_APIURL=http://localhost:8080
